@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>HROne — API Integration Pre-Call Intake Form</title>
+    <title>HROne — API Integration Pre-intake Form</title>
     <style>
         :root {
             --primary: #06563f;
@@ -13,13 +13,21 @@
             --bg-light: #f8f9fa;
             --text-dark: #222;
             --text-light: #fff;
+            --card-bg: #fff;
+            --highlight-bg: #eaf7f2;
+            --table-header-bg: #06563f;
+            --table-row-alt: #f8f9fa;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
             font-family: "Segoe UI", Arial, sans-serif;
             line-height: 1.6;
-            margin: 0;
-            padding: 0;
             background: var(--bg-light);
             color: var(--text-dark);
         }
@@ -27,20 +35,20 @@
         header {
             background: var(--primary);
             color: var(--text-light);
-            padding: 20px;
             display: flex;
             align-items: center;
             gap: 20px;
+            padding: 20px 40px;
+            border-bottom: 4px solid var(--accent);
         }
 
         header img {
-            height: 80px;
+            height: 70px;
         }
 
         header h1 {
-            margin: 0;
-            font-size: 1.8rem;
-            font-weight: bold;
+            font-size: 2rem;
+            font-weight: 700;
             letter-spacing: 1px;
         }
 
@@ -51,389 +59,265 @@
         }
 
         .card {
-            background: #fff;
-            padding: 25px;
+            background: var(--card-bg);
             border-radius: 12px;
-            margin-top: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 25px;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
         }
 
         h2 {
             border-left: 6px solid var(--accent);
             padding-left: 12px;
-            font-size: 1.5rem;
-            margin-top: 0;
-            margin-bottom: 15px;
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            color: var(--primary);
         }
 
-        .purpose-box {
-            background: #eaf7f2;
-            border-left: 4px solid var(--accent);
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin-bottom: 25px;
-            font-size: 14px;
+        p {
+            margin-bottom: 15px;
             line-height: 1.7;
         }
 
-        .purpose-box strong {
-            color: var(--primary);
+        .description {
+            background: var(--highlight-bg);
+            border-left: 4px solid var(--accent);
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            font-style: italic;
+            text-align: justify;
+            line-height: 1.7;
+            font-weight: 500;
         }
 
         .form-group {
             margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
         }
 
         .form-group label {
+            display: block;
             font-weight: 600;
-            color: var(--text-dark);
-            min-width: 250px;
-            font-size: 15px;
+            margin-bottom: 8px;
+            color: var(--primary);
         }
 
         .form-group input[type="text"],
         .form-group input[type="email"],
-        .form-group input[type="tel"] {
-            flex: 1;
-            border: none;
-            border-bottom: 2px solid #333;
-            padding: 8px 5px;
-            font-size: 14px;
-            font-family: inherit;
-            background: transparent;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-bottom-color: var(--accent);
-        }
-
-        .objective-section {
-            margin-top: 20px;
-        }
-
-        .objective-section label {
-            display: block;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 10px;
-            font-size: 15px;
-        }
-
-        .objective-textarea {
+        .form-group input[type="tel"],
+        .form-group input[type="date"],
+        .form-group textarea {
             width: 100%;
-            border: 2px solid #333;
-            border-radius: 8px;
-            padding: 15px;
-            min-height: 100px;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
             font-family: inherit;
-            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group input[type="email"]:focus,
+        .form-group input[type="tel"]:focus,
+        .form-group input[type="date"]:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
             resize: vertical;
         }
 
-        .objective-textarea:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-
-        .method-box {
-            background: #f8f9fa;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            padding: 15px 20px;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .method-box:hover {
-            background: #fff;
-            border-color: var(--accent);
-        }
-
-        .method-box label {
-            flex: 1;
-            font-weight: 500;
-            color: var(--text-dark);
-            font-size: 15px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .method-box .method-title {
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .method-box input[type="checkbox"] {
-            width: 24px;
-            height: 24px;
-            cursor: pointer;
-            accent-color: var(--primary);
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
-            margin-bottom: 20px;
-        }
-
-        th,
-        td {
-            border: 1px solid var(--primary);
-            padding: 15px;
-            text-align: left;
-            font-size: 14px;
-        }
-
-        th {
-            background: var(--primary);
-            color: var(--text-light);
-            font-weight: 600;
-        }
-
-        tr:nth-child(even) {
-            background: #f9f9f9;
-        }
-
-        td input[type="text"] {
-            width: 100%;
-            border: none;
-            padding: 5px;
-            font-size: 14px;
-            font-family: inherit;
-            background: transparent;
-        }
-
-        td input:focus {
-            outline: 1px solid var(--accent);
-            background: #fff;
-        }
-
-        .reference-note {
-            font-size: 12px;
-            color: #7f8c8d;
-            font-style: italic;
-            display: block;
-            margin-top: 5px;
-        }
-
-        .signature-section {
-            margin-top: 30px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 8px;
-        }
-
-        .signature-group {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .signature-group label {
-            font-weight: 600;
-            color: var(--text-dark);
-            min-width: 150px;
-            font-size: 15px;
-        }
-
-        .signature-group input[type="text"],
-        .signature-group input[type="date"] {
-            flex: 1;
-            border: none;
-            border-bottom: 2px solid #333;
-            padding: 8px 5px;
-            font-size: 14px;
-            font-family: inherit;
-            background: transparent;
-        }
-
-        .signature-group input:focus {
-            outline: none;
-            border-bottom-color: var(--accent);
-        }
-
-        .footer-note {
-            background: #fff3cd;
-            border-left: 6px solid #ffc107;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 25px;
-            font-size: 14px;
-            line-height: 1.7;
-        }
-
-        .footer-note strong {
-            color: #856404;
-        }
-
-        .final-checkbox-box {
-            background: #d4edda;
-            border: 2px solid #28a745;
-            border-radius: 8px;
-            padding: 15px 20px;
             margin-top: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            cursor: pointer;
+            font-size: 0.95rem;
         }
 
-        .final-checkbox-box:hover {
-            background: #c3e6cb;
+        table th,
+        table td {
+            padding: 14px 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+            vertical-align: middle;
         }
 
-        .final-checkbox-box label {
+        table th {
             font-weight: 600;
-            color: #155724;
-            font-size: 14px;
+            background-color: var(--table-header-bg);
+            color: #fff;
+        }
+
+        table tbody tr:nth-child(even) {
+            background-color: var(--table-row-alt);
+        }
+
+        table td:nth-child(1) {
+            width: 10%;
+            text-align: center;
+        }
+
+        table td:nth-child(2) {
+            width: 20%;
+        }
+
+        table td:nth-child(3) {
+            width: 70%;
+        }
+
+        .checkbox-cell {
+            text-align: center;
+        }
+
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
             cursor: pointer;
-            flex: 1;
+            accent-color: var(--accent);
         }
 
-        .final-checkbox-box input[type="checkbox"] {
-            width: 24px;
-            height: 24px;
+        input[type="file"] {
+            font-size: 0.95rem;
             cursor: pointer;
-            accent-color: #28a745;
         }
 
-        .action-buttons {
-            display: flex;
-            gap: 15px;
-            margin-top: 25px;
-            justify-content: center;
-        }
-
-        .btn {
-            padding: 12px 30px;
+        input[type="file"]::file-selector-button {
+            background-color: var(--accent);
+            color: white;
             border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 6px;
             cursor: pointer;
-            transition: all 0.3s;
+            font-weight: 600;
+            margin-right: 15px;
+            transition: background-color 0.3s ease;
         }
 
-        .btn-print {
-            background: var(--primary);
+        input[type="file"]::file-selector-button:hover {
+            background-color: var(--primary);
+        }
+
+        .print-btn {
+            background-color: var(--primary);
             color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
-        .btn-print:hover {
-            background: var(--accent);
+        .print-btn:hover {
+            background-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
         }
 
-        .btn-clear {
-            background: #dc3545;
-            color: white;
-        }
-
-        .btn-clear:hover {
-            background: #c82333;
+        .print-btn span {
+            font-size: 1.2rem;
+            margin-right: 8px;
         }
 
         footer {
             background: var(--primary);
             color: var(--text-light);
             text-align: center;
-            padding: 20px;
-            font-size: 14px;
+            padding: 25px;
+            font-size: 0.95rem;
             margin-top: 40px;
             border-radius: 8px 8px 0 0;
         }
 
         footer span {
-            color: #fff;
             font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            table th,
+            table td {
+                padding: 10px;
+                font-size: 0.85rem;
+            }
         }
 
         @media print {
             body {
                 background: white;
-                padding: 0;
             }
 
             .container {
                 max-width: 100%;
                 margin: 0;
-                padding: 20px;
+                padding: 0;
             }
 
             .card {
                 box-shadow: none;
                 page-break-inside: avoid;
+                margin-top: 15px;
             }
 
-            .action-buttons {
+            .card:hover {
+                transform: none;
+                box-shadow: none;
+            }
+
+            .print-btn {
                 display: none;
             }
 
-            header {
-                print-color-adjust: exact;
+            input[type="file"] {
+                display: none;
+            }
+
+            #signature-preview {
+                display: block !important;
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="tel"],
+            input[type="date"],
+            textarea {
+                border: none;
+                border-bottom: 1px solid #333;
+                border-radius: 0;
+                background: transparent;
+            }
+
+            input[type="checkbox"] {
                 -webkit-print-color-adjust: exact;
-            }
-
-            footer {
-                page-break-before: avoid;
-            }
-        }
-
-        @media screen and (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-
-            header {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            header h1 {
-                font-size: 1.3rem;
-            }
-
-            .card {
-                padding: 15px;
-            }
-
-            .form-group {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .form-group label {
-                min-width: 100%;
-                margin-bottom: 8px;
-            }
-
-            .signature-group {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .signature-group label {
-                min-width: 100%;
-                margin-bottom: 8px;
-            }
-
-            .action-buttons {
-                flex-direction: column;
-            }
-
-            .btn {
-                width: 100%;
+                print-color-adjust: exact;
             }
         }
     </style>
@@ -442,185 +326,116 @@
 <body>
     <div class="container">
         <header>
-            <img src="HROne_Logo.jpg" alt="HROne Logo" onerror="this.style.display='none'">
-            <h1>API Integration Pre-Call Intake Form</h1>
+            <img src="HROne_Logo.jpg" alt="HROne Logo">
+            <h1>API Integration Pre-intake Form</h1>
         </header>
 
         <!-- Purpose -->
         <div class="card">
-            <div class="purpose-box">
-                <strong>Purpose:</strong> This form helps us confirm your preferred integration approach. Please indicate
-                whether your partner will use HROne's APIs or if HROne needs to use your partner's APIs. The details you
-                provide will help us understand your requirements and plan the next steps effectively.
+            <div class="description">
+                <b>Purpose:</b> This form helps us confirm your preferred integration approach. Please indicate whether your partner will use HROne's APIs or if HROne needs to use your partner's APIs. The details you provide will help us understand your requirements and plan the next steps effectively.
             </div>
         </div>
 
         <!-- Client & Partner Information -->
         <div class="card">
             <h2>Client & Partner Information</h2>
-
-            <div class="form-group">
-                <label>Organization Name</label>
-                <input type="text" id="org-name" placeholder="Enter organization name">
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="org-name">Organization Name</label>
+                    <input type="text" id="org-name" placeholder="Enter organization name">
+                </div>
+                <div class="form-group">
+                    <label for="contact-person">Contact Person</label>
+                    <input type="text" id="contact-person" placeholder="Enter contact person name">
+                </div>
             </div>
 
-            <div class="form-group">
-                <label>Contact Person</label>
-                <input type="text" id="contact-person" placeholder="Enter contact person name">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="contact-number">Contact Number</label>
+                    <input type="tel" id="contact-number" placeholder="Enter contact number">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Enter email address">
+                </div>
             </div>
 
-            <div class="form-group">
-                <label>Contact Number</label>
-                <input type="tel" id="contact-number" placeholder="Enter contact number">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="partner-org">Partner Organization Name</label>
+                    <input type="text" id="partner-org" placeholder="Enter partner organization name">
+                </div>
+                <div class="form-group">
+                    <label for="partner-contact">Partner Contact Person</label>
+                    <input type="text" id="partner-contact" placeholder="Enter partner contact person name">
+                </div>
             </div>
 
-            <div class="form-group">
-                <label>Email Address</label>
-                <input type="email" id="email-address" placeholder="Enter email address">
-            </div>
-
-            <div class="form-group">
-                <label>Partner Organization Name</label>
-                <input type="text" id="partner-org-name" placeholder="Enter partner organization name">
-            </div>
-
-            <div class="form-group">
-                <label>Partner Contact Person</label>
-                <input type="text" id="partner-contact-person" placeholder="Enter partner contact person">
-            </div>
-
-            <div class="form-group">
-                <label>Partner Contact Number</label>
-                <input type="tel" id="partner-contact-number" placeholder="Enter partner contact number">
-            </div>
-
-            <div class="form-group">
-                <label>Partner Email Address</label>
-                <input type="email" id="partner-email" placeholder="Enter partner email address">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="partner-number">Partner Contact Number</label>
+                    <input type="tel" id="partner-number" placeholder="Enter partner contact number">
+                </div>
+                <div class="form-group">
+                    <label for="partner-email">Partner Email Address</label>
+                    <input type="email" id="partner-email" placeholder="Enter partner email address">
+                </div>
             </div>
         </div>
 
         <!-- Objective of Integration -->
         <div class="card">
             <h2>Objective of Integration</h2>
-            <div class="objective-section">
-                <label>Integration Purpose:</label>
-                <textarea class="objective-textarea" id="integration-purpose" placeholder="Brief description of integration objective..."></textarea>
+            <div class="form-group">
+                <label for="objective">Please describe the objective and scope of integration</label>
+                <textarea id="objective" placeholder="Enter the objective of integration..."></textarea>
             </div>
         </div>
 
         <!-- Integration Method -->
         <div class="card">
             <h2>Integration Method</h2>
-
-            <div class="method-box" onclick="toggleCheckbox('method1')">
-                <label>
-                    <input type="checkbox" id="method1" onclick="event.stopPropagation()">
-                    <span><span class="method-title">Method I:</span> Partner ready to use HROne API</span>
-                </label>
-            </div>
-
-            <div class="method-box" onclick="toggleCheckbox('method2')">
-                <label>
-                    <input type="checkbox" id="method2" onclick="event.stopPropagation()">
-                    <span><span class="method-title">Method II:</span> Partner wants to provide API and HROne required to be consumer</span>
-                </label>
-            </div>
-
-            <div class="method-box" onclick="toggleCheckbox('method3')">
-                <label>
-                    <input type="checkbox" id="method3" onclick="event.stopPropagation()">
-                    <span><span class="method-title">Method III:</span> Partner wants SFTP approach</span>
-                </label>
-            </div>
-
-            <div class="method-box" onclick="toggleCheckbox('method4')">
-                <label>
-                    <input type="checkbox" id="method4" onclick="event.stopPropagation()">
-                    <span><span class="method-title">Method IV:</span> Two-way Integration</span>
-                </label>
-            </div>
-        </div>
-
-        <!-- Pricing Table -->
-        <div class="card">
-            <h2>Pricing Table</h2>
+            <p style="margin-bottom: 20px;">Please select the preferred integration method(s):</p>
+            
             <table>
                 <thead>
                     <tr>
-                        <th style="width: 35%;">Integration Type</th>
-                        <th>Pricing Details</th>
+                        <th>Select</th>
+                        <th>Method</th>
+                        <th>Integration Type</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>Ready to use HROne API</strong></td>
-                        <td>
-                            One-time enablement fee of <strong>₹15,000</strong> and credit limit
-                            <span class="reference-note">&lt;refer SOP-Standard&gt;</span>
+                        <td class="checkbox-cell">
+                            <input type="checkbox" id="method1" name="integration-method" value="method1">
                         </td>
+                        <td><b>Method I</b></td>
+                        <td>Partner ready to use HROne API</td>
                     </tr>
                     <tr>
-                        <td><strong>Custom API</strong></td>
-                        <td>
-                             Start scope: <strong>₹2,50,000</strong> and more on effort estimation
-                            <b> As per the integrtion requriment HROne going to expose custom API, so hosting changers will not apply </b>
-                            <span class="reference-note">&lt;refer SOP-Custom&gt;</span>
-                            <br><br>
-                            Hosting charges: <strong>₹5,000 per month</strong>                            
-                            <span class="reference-note">&lt;refer SOP-Custom&gt;</span>
+                        <td class="checkbox-cell">
+                            <input type="checkbox" id="method2" name="integration-method" value="method2">
                         </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Timeline -->
-        <div class="card">
-            <h2>Timeline</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th style="width: 55%;">Stage</th>
-                        <th>Duration / Notes</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>API Understanding</td>
-                        <td><input type="text" placeholder="Enter duration/notes"></td>
+                        <td><b>Method II</b></td>
+                        <td>Partner wants to provide API and HROne required to be consumer</td>
                     </tr>
                     <tr>
-                        <td>For Method I: If technical consultancy required</td>
-                        <td><input type="text" placeholder="Enter duration/notes"></td>
+                        <td class="checkbox-cell">
+                            <input type="checkbox" id="method3" name="integration-method" value="method3">
+                        </td>
+                        <td><b>Method III</b></td>
+                        <td>Partner wants SFTP approach</td>
                     </tr>
                     <tr>
-                        <td>For Method II, III, IV: Requirement gathering & discussion</td>
-                        <td><input type="text" placeholder="Enter duration/notes"></td>
-                    </tr>
-                    <tr>
-                        <td>Field mapping exercise & Others</td>
-                        <td><input type="text" placeholder="Enter duration/notes"></td>
-                    </tr>
-                    <tr>
-                        <td>Technical details of partner API environment</td>
-                        <td><input type="text" placeholder="Enter duration/notes"></td>
-                    </tr>
-                    <tr>
-                        <td>Sign off - HROne API Integration Post-Call Intake Form</td>
-                        <td><input type="text" placeholder="Enter duration/notes"></td>
-                    </tr>
-                    <tr>
-                        <td>Development</td>
-                        <td><input type="text" placeholder="Enter duration/notes"></td>
-                    </tr>
-                    <tr>
-                        <td>UAT</td>
-                        <td><input type="text" placeholder="Enter duration/notes"></td>
-                    </tr>
-                    <tr>
-                        <td>Final UAT & Go Live</td>
-                        <td><input type="text" placeholder="Enter duration/notes"></td>
+                        <td class="checkbox-cell">
+                            <input type="checkbox" id="method4" name="integration-method" value="method4">
+                        </td>
+                        <td><b>Method IV</b></td>
+                        <td>Two-way Integration</td>
                     </tr>
                 </tbody>
             </table>
@@ -629,77 +444,91 @@
         <!-- Client POC -->
         <div class="card">
             <h2>Client POC</h2>
-            <div class="signature-section">
-                <div class="signature-group">
-                    <label>POC Signature:</label>
-                    <input type="text" id="poc-signature" placeholder="Enter POC name">
+            <div class="form-group">
+                <label for="poc-name">POC Name</label>
+                <input type="text" id="poc-name" placeholder="Enter POC name">
+            </div>
+            
+            <!-- <div class="form-group">
+                <label for="signature-type">Signature Authorization</label>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">Please provide your authorization by typing your full name below or uploading a signature image:</p>
+                
+                <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 12px 15px; border-radius: 6px; margin-bottom: 15px;">
+                    <p style="font-size: 0.85rem; color: #856404; margin: 0;"><strong>ℹ️ Note:</strong> Your signature will appear in the preview below and will be visible when you print this form.</p>
                 </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <label for="typed-signature" style="font-size: 0.95rem; font-weight: 500;">Option 1: Type Your Full Name (Digital Signature)</label>
+                    <input type="text" id="typed-signature" placeholder="Type your full name as digital signature" style="font-style: italic;">
+                </div>
+                 -->
+                <div style="margin-bottom: 20px;">
+                    <label for="signature-upload" style="font-size: 0.95rem; font-weight: 500;">Option 2: Upload Signature Image</label>
+                    <input type="file" id="signature-upload" accept="image/*" style="display: block; margin-top: 10px; padding: 10px; border: 2px solid #ddd; border-radius: 6px; width: 100%;">
+                    
+                    <!-- Signature Preview Area -->
+                    <div id="signature-preview" style="margin-top: 15px; display: none;">
+                        <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;"><strong>Signature Preview:</strong></p>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="signature-date">Date of Signature</label>
+                        <input type="date" id="signature-date">
+                    </div>
+                    <div class="form-group">
+                        <label for="designation">Designation/Title</label>
+                        <input type="text" id="designation" placeholder="Enter your designation">
+                    </div>
+                </div>
+            </div>
 
-                <div class="signature-group">
-                    <label>Date:</label>
-                    <input type="date" id="signature-date">
-                </div>
+            <!-- Print Button -->
+            <div style="text-align: center; margin-top: 30px;">
+                <button onclick="printForm()" class="print-btn">
+                    <span></span> Print Form
+                </button>
             </div>
         </div>
 
-        <!-- Footer Note -->
-        <div class="card">
-            <div class="footer-note">
-                <strong>Note:</strong> Following submission of this pre-intake enquiry form, the <strong>HROne API
-                    Integration Post-Call Intake Form</strong> will be provided to the client & partner for completion of
-                the detailed technical specifications.
-            </div>
-
-            <!-- <div class="final-checkbox-box" onclick="toggleCheckbox('final-check')">
-                <input type="checkbox" id="final-check" onclick="event.stopPropagation()">
-                <label>Make a HTML Document so that client can print it and provide to us in HROne format</label>
-            </div> -->
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="action-buttons">
-            <button class="btn btn-print" onclick="window.print()">Print Form</button>
-            <button class="btn btn-clear" onclick="clearForm()">Clear Form</button>
-        </div>
-
+        <!-- Footer -->
         <footer>
-            © <span>2025</span> HROne. All rights reserved.
+            © <span>2025</span> Uneecops Workplace Solution Pvt. Ltd. All rights reserved.
         </footer>
     </div>
 
     <script>
-        // Toggle checkbox when clicking on the box
-        function toggleCheckbox(id) {
-            const checkbox = document.getElementById(id);
-            checkbox.checked = !checkbox.checked;
-        }
-
-        // Set today's date as default
-        window.onload = function() {
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('signature-date').value = today;
-        };
-
-        // Clear form function
-        function clearForm() {
-            if (confirm('Are you sure you want to clear all form data?')) {
-                // Clear text inputs
-                document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"]').forEach(input => {
-                    input.value = '';
-                });
-                
-                // Clear textarea
-                document.getElementById('integration-purpose').value = '';
-                
-                // Uncheck all checkboxes
-                document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-                    checkbox.checked = false;
-                });
-                
-                // Reset date to today
-                const today = new Date().toISOString().split('T')[0];
-                document.getElementById('signature-date').value = today;
+        // Preview uploaded signature
+        document.getElementById('signature-upload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const preview = document.getElementById('signature-preview');
+                    preview.innerHTML = '<p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;"><strong>Signature Preview:</strong></p><img src="' + event.target.result + '" alt="Signature" style="max-width: 300px; max-height: 150px; border: 2px solid #ddd; border-radius: 6px; padding: 10px; background: white;">';
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
             }
+        });
+
+        // Preview typed signature
+        document.getElementById('typed-signature').addEventListener('input', function(e) {
+            const typedText = e.target.value;
+            const preview = document.getElementById('signature-preview');
+            
+            if (typedText.trim() !== '') {
+                preview.innerHTML = '<p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;"><strong>Digital Signature Preview:</strong></p><div style="font-family: \'Brush Script MT\', cursive; font-size: 2rem; padding: 20px; border: 2px solid #ddd; border-radius: 6px; background: white; display: inline-block;">' + typedText + '</div>';
+                preview.style.display = 'block';
+            } else {
+                preview.style.display = 'none';
+            }
+        });
+
+        // Print functionality
+        function printForm() {
+            window.print();
         }
     </script>
 </body>
