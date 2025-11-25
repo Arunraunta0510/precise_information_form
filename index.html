@@ -1,220 +1,739 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API Integration Form</title>
-
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HROne — API Integration Pre-intake Form</title>
     <style>
+      :root {
+        --primary: #06563f;
+        --secondary: #2b4891;
+        --accent: #4cafac;
+        --bg-light: #f8f9fa;
+        --text-dark: #222;
+        --text-light: #fff;
+        --card-bg: #fff;
+        --highlight-bg: #eaf7f2;
+        --table-header-bg: #06563f;
+        --table-row-alt: #f8f9fa;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        line-height: 1.6;
+        background: var(--bg-light);
+        color: var(--text-dark);
+      }
+
+      header {
+        background: var(--primary);
+        color: var(--text-light);
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 20px 40px;
+        border-bottom: 4px solid var(--accent);
+      }
+
+      header img {
+        height: 70px;
+      }
+
+      header h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: 30px auto;
+        padding: 0 20px;
+      }
+
+      .card {
+        background: var(--card-bg);
+        border-radius: 12px;
+        padding: 30px;
+        margin-top: 25px;
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+      }
+
+      h2 {
+        border-left: 6px solid var(--accent);
+        padding-left: 12px;
+        font-size: 1.6rem;
+        margin-bottom: 20px;
+        color: var(--primary);
+      }
+
+      p {
+        margin-bottom: 15px;
+        line-height: 1.7;
+      }
+
+      .description {
+        background: var(--highlight-bg);
+        border-left: 4px solid var(--accent);
+        padding: 15px 20px;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        color: var(--text-dark);
+        margin-bottom: 20px;
+        font-style: italic;
+        text-align: justify;
+        line-height: 1.7;
+        font-weight: 500;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: var(--primary);
+      }
+
+      .form-group input[type="text"],
+      .form-group input[type="email"],
+      .form-group input[type="tel"],
+      .form-group input[type="date"],
+      .form-group textarea {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-family: inherit;
+        transition: border-color 0.3s ease;
+      }
+
+      .form-group input[type="text"]:focus,
+      .form-group input[type="email"]:focus,
+      .form-group input[type="tel"]:focus,
+      .form-group input[type="date"]:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: var(--accent);
+      }
+
+      .form-group textarea {
+        min-height: 120px;
+        max-height: 600px;
+        resize: vertical;
+        overflow-y: auto;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        font-size: 0.95rem;
+      }
+
+      table th,
+      table td {
+        padding: 14px 12px;
+        text-align: left;
+        border: 1px solid #ddd;
+        vertical-align: middle;
+      }
+
+      table th {
+        font-weight: 600;
+        background-color: var(--table-header-bg);
+        color: #fff;
+      }
+
+      table tbody tr:nth-child(even) {
+        background-color: var(--table-row-alt);
+      }
+
+      table td:nth-child(1) {
+        width: 10%;
+        text-align: center;
+      }
+
+      table td:nth-child(2) {
+        width: 20%;
+      }
+
+      table td:nth-child(3) {
+        width: 70%;
+      }
+
+      .checkbox-cell {
+        text-align: center;
+      }
+
+      input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        accent-color: var(--accent);
+      }
+
+      input[type="file"] {
+        font-size: 0.95rem;
+        cursor: pointer;
+      }
+
+      input[type="file"]::file-selector-button {
+        background-color: var(--accent);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        margin-right: 15px;
+        transition: background-color 0.3s ease;
+      }
+
+      input[type="file"]::file-selector-button:hover {
+        background-color: var(--primary);
+      }
+
+      .print-btn {
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        padding: 15px 40px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .print-btn:hover {
+        background-color: var(--accent);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+      }
+
+      .print-btn span {
+        font-size: 1.2rem;
+        margin-right: 8px;
+      }
+
+      footer {
+        background: var(--primary);
+        color: var(--text-light);
+        text-align: center;
+        padding: 25px;
+        font-size: 0.95rem;
+        margin-top: 40px;
+        border-radius: 8px 8px 0 0;
+      }
+
+      footer span {
+        font-weight: bold;
+      }
+
+      /* Print-specific styles for objective field */
+      .print-only {
+        display: none;
+      }
+
+      @media (max-width: 768px) {
+        header {
+          flex-direction: column;
+          text-align: center;
+          gap: 10px;
+        }
+
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+
+        table th,
+        table td {
+          padding: 10px;
+          font-size: 0.85rem;
+        }
+      }
+
+      @media print {
+        @page {
+          margin: 0.5in;
+          size: A4;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background: #f0f4f7;
-            padding: 20px;
-            margin: 0;
+          background: white;
+          margin: 0;
+          padding: 0;
         }
 
         .container {
-            background: white;
-            max-width: 900px;
-            margin: auto;
-            padding: 20px 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          max-width: 100%;
+          margin: 0;
+          padding: 0;
+        }
+
+        header {
+          padding: 15px 20px;
+          margin-bottom: 10px;
+          page-break-after: avoid;
+        }
+
+        header img {
+          height: 50px;
+        }
+
+        header h1 {
+          font-size: 1.5rem;
+        }
+
+        .card {
+          box-shadow: none;
+          page-break-inside: avoid;
+          margin-top: 10px;
+          padding: 15px 20px;
+          border-radius: 0;
+        }
+
+        .card:first-of-type {
+          margin-top: 0;
+        }
+
+        .card:hover {
+          transform: none;
+          box-shadow: none;
         }
 
         h2 {
-            text-align: center;
-            color: #06563f;
-            margin-bottom: 10px;
+          font-size: 1.2rem;
+          margin-bottom: 12px;
+          page-break-after: avoid;
         }
 
-        p.section-title {
-            font-weight: bold;
-            color: #06563f;
-            margin-top: 25px;
-            margin-bottom: 10px;
-            border-bottom: 2px solid #06563f;
-            padding-bottom: 5px;
+        .description {
+          padding: 10px 15px;
+          margin-bottom: 0;
+          font-size: 0.85rem;
+          line-height: 1.5;
         }
 
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 6px;
-            margin-top: 12px;
+        p {
+          margin-bottom: 8px;
+          line-height: 1.4;
+          font-size: 0.9rem;
+        }
+
+        .form-group {
+          margin-bottom: 12px;
+          page-break-inside: avoid;
+        }
+
+        .form-group label {
+          margin-bottom: 4px;
+          font-size: 0.9rem;
+        }
+
+        .form-row {
+          gap: 15px;
+          margin-bottom: 8px;
+        }
+
+        .print-btn {
+          display: none;
+        }
+
+        input[type="file"] {
+          display: none;
+        }
+
+        #signature-preview {
+          display: block !important;
+          margin-top: 8px;
         }
 
         input[type="text"],
         input[type="email"],
+        input[type="tel"],
         input[type="date"],
-        select,
         textarea {
-            width: 100%;
-            padding: 10px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            font-size: 15px;
-            box-sizing: border-box;
-            background: #fff;
+          border: none;
+          border-bottom: 1px solid #333;
+          border-radius: 0;
+          background: transparent;
+          padding: 4px 8px;
+          font-size: 0.9rem;
+          page-break-inside: avoid;
         }
 
-        textarea {
-            resize: none;
-            overflow-y: hidden;
-            min-height: 120px;
+        input[type="checkbox"] {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
         }
 
-        .row {
-            display: flex;
-            gap: 20px;
+        table {
+          margin-top: 10px;
+          font-size: 0.85rem;
+          page-break-inside: avoid;
         }
 
-        .col {
-            flex: 1;
+        table th,
+        table td {
+          padding: 8px 10px;
         }
 
-        .signature-section {
-            margin-top: 20px;
+        /* Hide the textarea on print */
+        #objective {
+          display: none !important;
+        }
+        
+        /* Show the print-friendly div */
+        .print-only {
+          display: block !important;
+          white-space: pre-wrap;
+          word-wrap: break-word;
+          line-height: 1.5;
+          padding: 8px 10px;
+          border: 1px solid #333;
+          border-radius: 0;
+          background: transparent;
+          font-family: inherit;
+          font-size: 0.9rem;
+          page-break-inside: auto;
+          margin-bottom: 8px;
         }
 
-        #signature-preview {
-            margin-top: 10px;
-            display: none;
+        footer {
+          margin-top: 15px;
+          padding: 12px;
+          font-size: 0.8rem;
+          border-radius: 0;
+          page-break-before: avoid;
         }
 
-        .print-btn {
-            margin-top: 30px;
-            padding: 10px 20px;
-            background: #06563f;
-            color: white;
-            border: none;
-            font-size: 16px;
-            border-radius: 6px;
-            cursor: pointer;
+        /* Signature note box */
+        .form-group div[style*="background: #fff3cd"] {
+          padding: 8px 12px;
+          margin-bottom: 10px;
         }
 
-        @media print {
-            .print-btn {
-                display: none;
-            }
-            body {
-                background: white;
-            }
-            .container {
-                box-shadow: none;
-            }
+        .form-group div[style*="background: #fff3cd"] p {
+          font-size: 0.75rem;
         }
+
+        /* Reduce spacing in signature section */
+        .form-group > div[style*="margin-bottom: 20px"] {
+          margin-bottom: 10px !important;
+        }
+
+        .form-group label[style*="font-size: 0.95rem"] {
+          font-size: 0.85rem !important;
+        }
+
+        /* Compact signature preview */
+        #signature-preview p {
+          font-size: 0.8rem;
+          margin-bottom: 5px;
+        }
+
+        #signature-preview div {
+          padding: 12px !important;
+          font-size: 1.5rem !important;
+        }
+
+        #signature-preview img {
+          max-width: 200px !important;
+          max-height: 100px !important;
+          padding: 5px !important;
+        }
+      }
     </style>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <div class="container">
-        <h2>API Integration Requirement Form</h2>
+      <header>
+        <img src="HROne_Logo.jpg" alt="HROne Logo" />
+        <h1>API Integration Pre-intake Form</h1>
+      </header>
 
-        <!-- ===================== Basic Information ===================== -->
-        <p class="section-title">Basic Information</p>
+      <!-- Purpose -->
+      <div class="card">
+        <div class="description">
+          <strong>Purpose:</strong> This form helps us confirm your preferred integration approach. Please
+          indicate whether your partner will use HROne's APIs or if HROne needs to use your partner's APIs.
+          The details you provide will help us understand your requirements and plan the next steps
+          effectively.
+        </div>
+      </div>
 
-        <label>Organization Name:</label>
-        <input type="text">
+      <!-- Client & Partner Information -->
+      <div class="card">
+        <h2>Client &amp; Partner Information</h2>
 
-        <label>Department:</label>
-        <input type="text">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="org-name">Organization Name</label>
+            <input type="text" id="org-name" placeholder="Enter organization name" />
+          </div>
 
-        <label>Requested By:</label>
-        <input type="text">
-
-        <div class="row">
-            <div class="col">
-                <label>Email:</label>
-                <input type="email">
-            </div>
-            <div class="col">
-                <label>Phone:</label>
-                <input type="text">
-            </div>
+          <div class="form-group">
+            <label for="contact-person">Contact Person</label>
+            <input type="text" id="contact-person" placeholder="Enter contact person name" />
+          </div>
         </div>
 
-        <label>Date of Submission:</label>
-        <input type="date">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="contact-number">Contact Number</label>
+            <input type="tel" id="contact-number" placeholder="Enter contact number" />
+          </div>
 
-        <!-- ===================== Integration Details ===================== -->
-        <p class="section-title">Integration Details</p>
-
-        <label>Integration Partner / Application Name:</label>
-        <input type="text">
-
-        <label>Integration Type:</label>
-        <select>
-            <option>API Integration</option>
-            <option>SFTP Integration</option>
-            <option>Webhook Integration</option>
-        </select>
-
-        <label>Objective of Integration:</label>
-        <textarea id="objective" placeholder="Write detailed objective here..."></textarea>
-
-        <!-- ===================== Signature Section ===================== -->
-        <p class="section-title">Authorized Signature</p>
-
-        <div class="signature-section">
-            <label>Upload Signature:</label>
-            <input type="file" id="signature-upload" accept="image/*">
-
-            <div id="signature-preview"></div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="Enter email address" />
+          </div>
         </div>
 
-        <button class="print-btn" onclick="printForm()">Print</button>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="partner-org">Partner Organization Name</label>
+            <input type="text" id="partner-org" placeholder="Enter partner organization name" />
+          </div>
+
+          <div class="form-group">
+            <label for="partner-contact">Partner Contact Person</label>
+            <input type="text" id="partner-contact" placeholder="Enter partner contact person name" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="partner-number">Partner Contact Number</label>
+            <input type="tel" id="partner-number" placeholder="Enter partner contact number" />
+          </div>
+
+          <div class="form-group">
+            <label for="partner-email">Partner Email Address</label>
+            <input type="email" id="partner-email" placeholder="Enter partner email address" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Objective of Integration -->
+      <div class="card">
+        <h2>Objective of Integration</h2>
+        <div class="form-group">
+          <label for="objective">Please describe the objective and scope of integration</label>
+          <textarea 
+            id="objective" 
+            placeholder="Write detailed objective here..."
+            oninput="autoExpand(this)"
+          ></textarea>
+          <!-- Hidden div for print display -->
+          <div id="objective-print" class="print-only"></div>
+        </div>
+      </div>
+
+      <!-- Integration Method -->
+      <div class="card">
+        <h2>Integration Method</h2>
+        <p style="margin-bottom: 20px">Please select the preferred integration method(s):</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Select</th>
+              <th>Method</th>
+              <th>Integration Type</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td class="checkbox-cell">
+                <input type="checkbox" id="method1" name="integration-method" value="method1" />
+              </td>
+              <td><strong>Method I</strong></td>
+              <td>Partner ready to use HROne API</td>
+            </tr>
+
+            <tr>
+              <td class="checkbox-cell">
+                <input type="checkbox" id="method2" name="integration-method" value="method2" />
+              </td>
+              <td><strong>Method II</strong></td>
+              <td>Partner wants to provide API and HROne required to be consumer</td>
+            </tr>
+
+            <tr>
+              <td class="checkbox-cell">
+                <input type="checkbox" id="method3" name="integration-method" value="method3" />
+              </td>
+              <td><strong>Method III</strong></td>
+              <td>Partner wants SFTP approach</td>
+            </tr>
+
+            <tr>
+              <td class="checkbox-cell">
+                <input type="checkbox" id="method4" name="integration-method" value="method4" />
+              </td>
+              <td><strong>Method IV</strong></td>
+              <td>Two-way Integration</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Client POC -->
+      <div class="card">
+        <h2>Client POC</h2>
+
+        <div class="form-group">
+          <label for="poc-name">POC Name</label>
+          <input type="text" id="poc-name" placeholder="Enter POC name" />
+        </div>
+
+        <div class="form-group">
+          <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px">
+            Please provide your authorization by typing your full name below or uploading a signature image:
+          </p>
+
+         <!-- Option 1: Typed Signature -->
+          <div style="margin-bottom: 20px">
+            <label for="typed-signature" style="font-size: 0.95rem; font-weight: 500">Option 1: Type Your Full Name
+              (Digital Signature)</label>
+            <input type="text" id="typed-signature" placeholder="Type your full name as digital signature"
+              style="font-style: italic" />
+          </div>
+
+          <!-- Option 2: Upload Signature Image -->
+          <div style="margin-bottom: 20px">
+            <label for="signature-upload" style="font-size: 0.95rem; font-weight: 500">Option 2: Upload Signature
+              Image</label>
+            <input type="file" id="signature-upload" accept="image/*"
+              style="display: block; margin-top: 10px; padding: 10px; border: 2px solid #ddd; border-radius: 6px; width: 100%" />
+
+            <!-- Signature Preview Area -->
+            <div id="signature-preview" style="margin-top: 15px; display: none">
+              <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px"><strong>Signature Preview:</strong></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="signature-date">Date of Signature</label>
+            <input type="date" id="signature-date" />
+          </div>
+
+          <div class="form-group">
+            <label for="designation">Designation/Title</label>
+            <input type="text" id="designation" placeholder="Enter your designation" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Print Button -->
+      <div style="text-align: center; margin-top: 30px">
+        <button onclick="printForm()" class="print-btn">
+          <span>️</span> Print Form
+        </button>
+      </div>
+
+      <!-- Footer -->
+      <footer>
+        © <span>2025</span> Uneecops Workplace Solution Pvt. Ltd. All rights reserved.
+      </footer>
     </div>
 
-    <!-- ===================== JAVASCRIPT ===================== -->
     <script>
-        // =====================================================================
-        // Signature Upload Preview
-        // =====================================================================
-        document.getElementById('signature-upload').addEventListener('change', function (e) {
-            const file = e.target.files[0];
-            if (!file) return;
+      // Auto-expand textarea as user types
+      function autoExpand(textarea) {
+        // Reset height to calculate new height
+        textarea.style.height = 'auto';
+        
+        // Set new height based on scroll height
+        textarea.style.height = Math.min(textarea.scrollHeight, 600) + 'px';
+        
+        // Update print version
+        const printDiv = document.getElementById('objective-print');
+        if (printDiv) {
+          printDiv.textContent = textarea.value;
+        }
+      }
 
+      // Initialize on page load for any pre-filled content
+      document.addEventListener('DOMContentLoaded', function() {
+        const objectiveField = document.getElementById('objective');
+        if (objectiveField && objectiveField.value) {
+          autoExpand(objectiveField);
+        }
+      });
+
+      // Safe event listeners with existence checks
+      const sigUpload = document.getElementById("signature-upload");
+      const typedSignature = document.getElementById("typed-signature");
+      const preview = document.getElementById("signature-preview");
+
+      if (sigUpload) {
+        sigUpload.addEventListener("change", function (e) {
+          const file = e.target.files[0];
+          if (file) {
             const reader = new FileReader();
             reader.onload = function (event) {
-                const preview = document.getElementById('signature-preview');
-                preview.innerHTML =
-                    '<p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;"><strong>Signature Preview:</strong></p>' +
-                    '<img src="' + event.target.result + '" alt="Signature" ' +
-                    'style="max-width: 300px; max-height: 150px; border: 2px solid #ddd; border-radius: 6px; padding: 10px; background: white;">';
-                preview.style.display = 'block';
+              preview.innerHTML =
+                '<p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;"><strong>Signature Preview:</strong></p>' +
+                '<img src="' +
+                event.target.result +
+                '" alt="Signature" style="max-width: 300px; max-height: 150px; border: 2px solid #ddd; border-radius: 6px; padding: 10px; background: white;" />';
+              preview.style.display = "block";
             };
             reader.readAsDataURL(file);
+          }
         });
+      }
 
-        // =====================================================================
-        // Auto-Expand Textarea: Objective of Integration
-        // =====================================================================
-        const objectiveField = document.getElementById('objective');
-
-        function autoExpand(textarea) {
-            textarea.style.height = 'auto';
-            textarea.style.height = textarea.scrollHeight + 'px';
-        }
-
-        objectiveField.addEventListener('input', function () {
-            autoExpand(this);
+      if (typedSignature) {
+        typedSignature.addEventListener("input", function (e) {
+          const typedText = e.target.value;
+          if (typedText.trim() !== "") {
+            preview.innerHTML =
+              '<p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;"><strong>Digital Signature Preview:</strong></p>' +
+              '<div style="font-family: \'Brush Script MT\', cursive; font-size: 2rem; padding: 20px; border: 2px solid #ddd; border-radius: 6px; background: white; display: inline-block;">' +
+              typedText +
+              "</div>";
+            preview.style.display = "block";
+          } else {
+            preview.style.display = "none";
+          }
         });
+      }
 
-        window.addEventListener('load', function () {
-            autoExpand(objectiveField);
-        });
-
-        // =====================================================================
-        // Print Function
-        // =====================================================================
-        function printForm() {
-            window.print();
-        }
+      // Print functionality
+      function printForm() {
+        window.print();
+      }
     </script>
-
-</body>
-
+  </body>
 </html>
