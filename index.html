@@ -545,14 +545,12 @@
         <h2>Objective of Integration</h2>
         <div class="form-group">
           <label for="objective">
-  <span style="color:red; font-weight:600;">
+  <span style= font-weight:600;">
     Please describe the objective and scope of this integration in detail. 
   </span><br>
   <i style="color:red; font-size: 13px;">
-    Include the purpose of the integration, systems involved, data to be exchanged,
-    automation expectations, frequency (real-time / scheduled), and any specific
-    business scenarios or dependencies. This information is mandatory to accurately
-    assess the integration requirements.
+    (Include the <b>purpose of the integration</b>,<b> systems involved</b>, <b>data to be exchanged</b>,
+     expectations through integration.)
   </i>
 </label>
 
@@ -567,109 +565,161 @@
       </div>
 
       <!-- Integration Method -->
-      <div class="card">
-        <h2>Integration Method</h2>
-       <p style="margin-bottom: 20px; font-weight: 500;">
-  Please select the preferred integration method(s): 
-  <span style="color:red;">(Mandatory)</span>
-</p>
+<div class="card">
+  <h2>Integration Method</h2>
+  <p style="margin-bottom: 20px; font-weight: 500;">
+    Please select the preferred integration method(s): 
+    <span style="color:red;">(Mandatory)</span>
+  </p>
 
-        <table>
-          <thead>
-            <tr>
-              <th>Select</th>
-              <th>Method</th>
-              <th>Integration Type</th>
-            </tr>
-          </thead>
+  <table>
+    <thead>
+      <tr>
+        <th>Select</th>
+        <th>Method</th>
+        <th>Integration Type (Simple Explanation)</th>
+      </tr>
+    </thead>
 
-          <tbody>
-            <tr>
-              <td class="checkbox-cell">
-                <input type="checkbox" id="method1" name="integration-method" value="method1" />
-              </td>
-              <td><strong>Method I</strong></td>
-              <td>Partner ready to use HROne API</td>
-            </tr>
+    <tbody>
+      <tr>
+        <td class="checkbox-cell">
+          <input type="checkbox" id="method1" name="integration-method" value="method1" />
+        </td>
+        <td><strong>Method I</strong></td>
+        <td>
+          Your partner system directly connects with HROne using HROne’s ready APIs.
+          Data exchange is automated and near real-time.  
+          <br><em>Best suited when the partner has technical capability and quick integration is required.</em>
+        </td>
+      </tr>
 
-            <tr>
-              <td class="checkbox-cell">
-                <input type="checkbox" id="method2" name="integration-method" value="method2" />
-              </td>
-              <td><strong>Method II</strong></td>
-              <td>Partner wants to provide API and HROne required to be consume</td>
-            </tr>
+      <tr>
+        <td class="checkbox-cell">
+          <input type="checkbox" id="method2" name="integration-method" value="method2" />
+        </td>
+        <td><strong>Method II</strong></td>
+        <td>
+          Your partner provides their own APIs, and HROne will consume them to exchange data.
+          Integration will be developed by HROne.  
+          <br><em>May involve additional development effort, cost, and timelines.</em>
+        </td>
+      </tr>
 
-            <tr>
-              <td class="checkbox-cell">
-                <input type="checkbox" id="method3" name="integration-method" value="method3" />
-              </td>
-              <td><strong>Method III</strong></td>
-              <td>Partner wants SFTP approach</td>
-            </tr>
+      <tr>
+        <td class="checkbox-cell">
+          <input type="checkbox" id="method3" name="integration-method" value="method3" />
+        </td>
+        <td><strong>Method III</strong></td>
+        <td>
+          Data is exchanged through files (Excel/CSV) via a secure SFTP server.
+          Information is shared at fixed intervals (daily / monthly).  
+          <br><em>Best suited for periodic processes like payroll or compliance reporting.</em>
+        </td>
+      </tr>
 
-            <tr>
-              <td class="checkbox-cell">
-                <input type="checkbox" id="method4" name="integration-method" value="method4" />
-              </td>
-              <td><strong>Method IV</strong></td>
-              <td>Two-way Integration</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <tr>
+        <td class="checkbox-cell">
+          <input type="checkbox" id="method4" name="integration-method" value="method4" />
+        </td>
+        <td><strong>Method IV</strong></td>
+        <td>
+          Data flows both ways between HROne and the partner system.
+          Employee data is shared from HROne, and processed results are sent back.  
+          <br><em>Recommended when end-to-end automation and data synchronization are required.</em>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 
       <!-- Estimated Timeline & Delivery Schedule -->
-      <div class="card">
-        <h2>Estimated Timeline &amp; Delivery Schedule</h2>
-        <div class="description">
-          The timelines below are approximate and may vary based on integration complexity, API documentation availability, and testing requirements.
-        </div>
+<div class="card">
+  <h2>Estimated Timeline &amp; Delivery Schedule</h2>
 
-        <table>
-          <thead>
-            <tr>
-              <th style="width: 20%;">Method</th>
-              <th style="width: 50%;">Integration Type</th>
-              <th style="width: 30%;">Estimated Timeline</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Method I</strong></td>
-              <td>Partner ready to use HROne API</td>
-              <td style="text-align: center;"><strong>7-10 Working Days</strong></td>
-            </tr>
-            <tr>
-              <td><strong>Method II</strong></td>
-              <td>Partner provides API, HROne consumes</td>
-              <td style="text-align: center;"><strong>15-20 Working Days</strong></td>
-            </tr>
-            <tr>
-              <td><strong>Method III</strong></td>
-              <td>Partner wants SFTP approach</td>
-              <td style="text-align: center;"><strong>10-15 Working Days</strong></td>
-            </tr>
-            <tr>
-              <td><strong>Method IV</strong></td>
-              <td>Two-way Integration</td>
-              <td style="text-align: center;"><strong>20-30 Working Days</strong></td>
-            </tr>
-          </tbody>
-        </table>
+  <div class="description">
+    The timelines mentioned below are indicative and may vary depending on integration complexity,
+    availability of technical documentation, dependency on third-party teams, and testing cycles.
+  </div>
 
-        <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px 20px; border-radius: 8px; margin-top: 20px;">
-          <p style="font-weight: 600; color: #856404; margin-bottom: 8px;">
-            <strong>Important Notes:</strong>
-          </p>
-          <ul style="margin-left: 20px; color: #856404;">
-            <li style="margin-bottom: 8px;">Timeline starts after receiving complete API documentation and credentials</li>
-            <li style="margin-bottom: 8px;">UAT (User Acceptance Testing): 3-5 working days additional</li>
-            <li style="margin-bottom: 8px;">Complex integrations with multiple endpoints may require additional time</li>
-            <li>Any requirement changes after development starts will impact timeline</li>
-          </ul>
-        </div>
-      </div>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 20%;">Method</th>
+        <th style="width: 50%;">Integration Type (Simple Explanation)</th>
+        <th style="width: 30%;">Estimated Timeline</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td><strong>Method I</strong></td>
+        <td>
+          Partner uses HROne’s ready APIs to directly connect and exchange data.
+          Minimal development is required from HROne.
+        </td>
+        <td style="text-align: center;">
+          <strong>10–15 Working Days</strong>
+        </td>
+      </tr>
+
+      <tr>
+        <td><strong>Method II</strong></td>
+        <td>
+          Partner shares their APIs and HROne builds the integration to consume them.
+          Requires detailed understanding, development, and multiple testing cycles.
+        </td>
+        <td style="text-align: center;">
+          <strong>20–25 Working Days</strong>
+        </td>
+      </tr>
+
+      <tr>
+        <td><strong>Method III</strong></td>
+        <td>
+          Data is exchanged through secure file transfer (SFTP) using agreed file formats
+          and scheduled data exchange.
+        </td>
+        <td style="text-align: center;">
+          <strong>15–20 Working Days</strong>
+        </td>
+      </tr>
+
+      <tr>
+        <td><strong>Method IV</strong></td>
+        <td>
+          Two-way data exchange where HROne sends data to the partner system
+          and receives processed data or results back, ensuring full synchronization.
+        </td>
+        <td style="text-align: center;">
+          <strong>25–35 Working Days</strong>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px 20px; border-radius: 8px; margin-top: 20px;">
+    <p style="font-weight: 600; color: #856404; margin-bottom: 8px;">
+      <strong>Important Notes:</strong>
+    </p>
+    <ul style="margin-left: 20px; color: #856404;">
+      <li style="margin-bottom: 8px;">
+        Timelines start only after receiving complete API documentation, credentials, and sample data from the partner.
+      </li>
+      <li style="margin-bottom: 8px;">
+        User Acceptance Testing (UAT) will require an additional <strong>5–7 working days</strong>.
+      </li>
+      <li style="margin-bottom: 8px;">
+        Delays from third-party vendors or incomplete inputs may extend the delivery timeline.
+      </li>
+      <li>
+        Any change in scope or requirements after development commencement will impact the final delivery schedule.
+      </li>
+    </ul>
+  </div>
+</div>
+
 
       <!-- Payment Terms and Conditions -->
       <div class="card">
