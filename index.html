@@ -544,7 +544,18 @@
       <div class="card">
         <h2>Objective of Integration</h2>
         <div class="form-group">
-          <label for="objective">Please describe the objective and scope of integration</label>
+          <label for="objective">
+  <span style="color:red; font-weight:600;">
+    Please describe the objective and scope of this integration in detail. *
+  </span><br>
+  <i style="color:red; font-size: 13px;">
+    Include the purpose of the integration, systems involved, data to be exchanged,
+    automation expectations, frequency (real-time / scheduled), and any specific
+    business scenarios or dependencies. This information is mandatory to accurately
+    assess the integration requirements.
+  </i>
+</label>
+
           <textarea 
             id="objective" 
             placeholder="Write detailed objective here..."
@@ -558,7 +569,10 @@
       <!-- Integration Method -->
       <div class="card">
         <h2>Integration Method</h2>
-        <p style="margin-bottom: 20px">Please select the preferred integration method(s):</p>
+       <p style="margin-bottom: 20px; font-weight: 500;">
+  Please select the preferred integration method(s): 
+  <span style="color:red;">(Mandatory)</span>
+</p>
 
         <table>
           <thead>
